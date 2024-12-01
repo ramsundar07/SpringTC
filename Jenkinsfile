@@ -1,36 +1,34 @@
 pipeline {
-    agent {
-        docker { image 'maven:3.9.4-eclipse-temurin-21' }
+    agent any
+    tools{
+        maven 'maven_3_5_0'
     }
-    environment {
-        DOCKER_IMAGE = "myapp/spring-boot-app"
-    }
-    stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
+    stages{
+        stage('Build Maven'){
+            steps{
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/ramsundar07/SpringTC']]])
+                sh 'mvn clean install'
             }
         }
-        stage('Build & Test') {
-            steps {
-                sh 'mvn clean package -DskipTests=false'
-            }
-        }
-        stage('Docker Build') {
-            steps {
-                script {
-                    docker.build(DOCKER_IMAGE)
+        stage('Build docker image'){
+            steps{
+                script{
+                    sh 'docker build -t ramz/SpringTC .'
                 }
             }
         }
-        stage('Docker Push') {
-            steps {
-                withDockerRegistry([credentialsId: 'dockerhub-credentials', url: '']) {
-                    script {
-                        docker.image(DOCKER_IMAGE).push('latest')
-                    }
+        stage('Push image to Hub'){
+            steps{
+                script{
+                   withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
+                   sh 'docker login -u ramsundar07 -p ${dockerhubpwd}'
+
+}
+                   sh 'docker push ramz/devops-integration'
                 }
             }
+        }
+
         }
     }
 }
