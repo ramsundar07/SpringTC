@@ -1,9 +1,27 @@
 package com.ramz;
 
-public class Main {
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-	public static void main(String []a) {
-		System.out.println("Helooo");
-	}
+/**
+ * Main class for application entry point.
+ */
+@SpringBootApplication
+public final class Main {
 
+    /**
+     * Private constructor to prevent instantiation of utility class.
+     */
+    private Main() {
+        // Prevent instantiation
+    }
+
+    /**
+     * Application entry point.
+     *
+     * @param args command-line arguments (unused)
+     */
+    public static void main(final String[] args) {
+        SpringApplication.run(Main.class, args);
+    }
 }
