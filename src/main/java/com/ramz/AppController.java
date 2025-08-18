@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * The controller handling web requests for the root path.
  * This class is not designed for extension.
  */
+@Controller
 public final class AppController {
 
     /**
