@@ -13,6 +13,9 @@
 	<properties>
 		<java.version>17</java.version>
 		<spring.boot.version>3.1.5</spring.boot.version>
+		<sonar.projectKey>SpringTC</sonar.projectKey>
+    	<sonar.projectName>SpringTC</sonar.projectName>
+    	<sonar.host.url>http://localhost:9000</sonar.host.url>
 	</properties>
 	<dependencies>
 		<!-- Spring Boot Starter Web (includes Spring MVC) -->
